@@ -1,0 +1,883 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Olive TETCHI — Ingénieure Génie Civil</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+    :root {
+      --navy:       #1B2B3A;
+      --accent:     #C4773B;
+      --accent-lt:  #E8A76D;
+      --bg:         #F9F7F4;
+      --bg-alt:     #EDE8DF;
+      --text:       #2A2A2A;
+      --muted:      #6B7280;
+      --white:      #FFFFFF;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+    }
+
+    /* ─── NAV ─────────────────────────────────────────── */
+    nav {
+      position: fixed; top: 0; width: 100%; z-index: 1000;
+      padding: 1.1rem 6%;
+      display: flex; justify-content: space-between; align-items: center;
+      transition: background 0.35s, box-shadow 0.35s;
+    }
+    nav.scrolled { background: var(--navy); box-shadow: 0 2px 24px rgba(0,0,0,.25); }
+
+    .nav-logo {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.25rem; color: #fff; text-decoration: none; font-weight: 600;
+      letter-spacing: .02em;
+    }
+    .nav-links { list-style: none; display: flex; gap: 2rem; }
+    .nav-links a {
+      color: rgba(255,255,255,.8); text-decoration: none;
+      font-size: .78rem; font-weight: 500;
+      letter-spacing: .08em; text-transform: uppercase;
+      transition: color .25s;
+    }
+    .nav-links a:hover { color: var(--accent-lt); }
+
+    /* ─── HERO ────────────────────────────────────────── */
+    #hero {
+      height: 100vh; min-height: 600px;
+      background: var(--navy);
+      display: flex; align-items: center;
+      position: relative; overflow: hidden;
+    }
+
+    /* subtle grid overlay */
+    #hero::before {
+      content: '';
+      position: absolute; inset: 0;
+      background-image:
+        linear-gradient(rgba(255,255,255,.03) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,.03) 1px, transparent 1px);
+      background-size: 60px 60px;
+    }
+
+    /* photo blended on right */
+    .hero-photo-bg {
+      position: absolute; right: 0; top: 0; bottom: 0; width: 45%;
+      background: url('Photo%20de%20profil.avif') center top / cover no-repeat;
+      -webkit-mask-image: linear-gradient(to right, transparent 0%, rgba(0,0,0,.5) 35%, rgba(0,0,0,.85) 100%);
+      mask-image: linear-gradient(to right, transparent 0%, rgba(0,0,0,.5) 35%, rgba(0,0,0,.85) 100%);
+      opacity: .35;
+    }
+
+    .hero-content {
+      position: relative; z-index: 2;
+      padding: 0 6%; max-width: 720px;
+    }
+    .hero-badge {
+      display: inline-block;
+      background: var(--accent); color: #fff;
+      font-size: .72rem; font-weight: 600;
+      letter-spacing: .12em; text-transform: uppercase;
+      padding: .4rem 1rem; border-radius: 2px; margin-bottom: 1.5rem;
+    }
+    .hero-content h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(3.2rem, 7vw, 5.5rem);
+      color: #fff; line-height: 1.05; font-weight: 700;
+      margin-bottom: .8rem;
+    }
+    .hero-content h1 em {
+      font-style: italic; color: var(--accent-lt);
+    }
+    .hero-sub {
+      font-size: 1.05rem; color: rgba(255,255,255,.65);
+      max-width: 520px; margin-bottom: 2.5rem;
+      font-weight: 300; line-height: 1.75;
+    }
+    .hero-btns { display: flex; gap: 1rem; flex-wrap: wrap; }
+
+    .btn-solid {
+      background: var(--accent); color: #fff;
+      padding: .88rem 2rem; border-radius: 3px; border: none;
+      font-size: .82rem; font-weight: 600;
+      letter-spacing: .06em; text-transform: uppercase;
+      text-decoration: none; cursor: pointer; transition: all .3s;
+    }
+    .btn-solid:hover { background: var(--accent-lt); transform: translateY(-2px); }
+
+    .btn-ghost {
+      background: transparent; color: #fff;
+      padding: .88rem 2rem; border-radius: 3px;
+      border: 1px solid rgba(255,255,255,.3);
+      font-size: .82rem; font-weight: 500;
+      letter-spacing: .06em; text-transform: uppercase;
+      text-decoration: none; transition: all .3s;
+    }
+    .btn-ghost:hover { border-color: var(--accent-lt); color: var(--accent-lt); }
+
+    .hero-scroll {
+      position: absolute; bottom: 2rem; left: 50%;
+      transform: translateX(-50%);
+      display: flex; flex-direction: column; align-items: center; gap: .5rem;
+      color: rgba(255,255,255,.4); font-size: .7rem;
+      letter-spacing: .1em; text-transform: uppercase;
+    }
+    .scroll-bar {
+      width: 1px; height: 42px;
+      background: linear-gradient(to bottom, rgba(255,255,255,.5), transparent);
+      animation: bar 2.2s ease infinite;
+    }
+    @keyframes bar {
+      0%   { transform: scaleY(0); transform-origin: top; opacity: 1; }
+      50%  { transform: scaleY(1); transform-origin: top; opacity: 1; }
+      51%  { transform: scaleY(1); transform-origin: bottom; }
+      100% { transform: scaleY(0); transform-origin: bottom; opacity: 0; }
+    }
+
+    /* ─── SHARED SECTION STYLES ───────────────────────── */
+    section { padding: 6rem 6%; }
+
+    .s-tag {
+      font-size: .72rem; font-weight: 600;
+      letter-spacing: .15em; text-transform: uppercase;
+      color: var(--accent); margin-bottom: .6rem;
+    }
+    .s-title {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(2rem, 4vw, 2.8rem);
+      color: var(--navy); line-height: 1.2; margin-bottom: .9rem;
+    }
+    .s-rule { width: 56px; height: 3px; background: var(--accent); margin-bottom: 3rem; }
+
+    /* ─── ABOUT ───────────────────────────────────────── */
+    #about { background: var(--bg); }
+
+    .about-wrap {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 5rem; align-items: start;
+    }
+
+    .about-photo-wrap {
+      position: relative;
+    }
+    .about-photo {
+      width: 100%; max-width: 380px;
+      aspect-ratio: 3/4;
+      object-fit: cover; object-position: top;
+      border-radius: 4px;
+      display: block;
+    }
+    .about-photo-placeholder {
+      width: 100%; max-width: 380px;
+      aspect-ratio: 3/4;
+      background: linear-gradient(135deg, var(--navy) 0%, #2e4a62 100%);
+      border-radius: 4px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 5rem;
+    }
+    .about-photo-accent {
+      position: absolute; bottom: -1rem; right: -1rem;
+      width: 120px; height: 120px;
+      background: var(--accent); border-radius: 4px; z-index: -1;
+    }
+
+    .about-text p {
+      color: var(--muted); font-size: 1rem;
+      margin-bottom: 1.4rem; line-height: 1.85;
+    }
+
+    .info-list { margin-top: 1.5rem; display: flex; flex-direction: column; gap: .75rem; }
+    .info-row {
+      display: flex; align-items: center; gap: .8rem;
+      font-size: .88rem; color: var(--muted);
+    }
+    .info-icon {
+      width: 30px; height: 30px; border-radius: 50%;
+      background: var(--navy); color: var(--accent-lt);
+      display: flex; align-items: center; justify-content: center;
+      font-size: .75rem; flex-shrink: 0;
+    }
+
+    .stat-grid {
+      display: grid; grid-template-columns: 1fr 1fr;
+      gap: 1rem; margin-top: 2rem;
+    }
+    .stat-box {
+      background: var(--navy); padding: 1.6rem 1.4rem;
+      border-radius: 4px;
+      border-left: 3px solid var(--accent);
+    }
+    .stat-num {
+      font-family: 'Playfair Display', serif;
+      font-size: 2.2rem; color: var(--accent-lt);
+      font-weight: 700; line-height: 1; margin-bottom: .4rem;
+    }
+    .stat-lbl { font-size: .8rem; color: rgba(255,255,255,.6); }
+
+    /* ─── SKILLS ──────────────────────────────────────── */
+    #skills { background: var(--bg-alt); }
+
+    .skills-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 1.25rem;
+    }
+    .skill-card {
+      background: var(--white); padding: 1.8rem;
+      border-radius: 6px; border-top: 3px solid var(--accent);
+      box-shadow: 0 2px 16px rgba(0,0,0,.05);
+    }
+    .skill-card h3 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.05rem; color: var(--navy);
+      margin-bottom: 1.1rem; font-weight: 600;
+    }
+    .tag {
+      display: inline-block;
+      background: var(--bg-alt); color: var(--text);
+      font-size: .78rem; padding: .32rem .8rem;
+      border-radius: 20px; margin: .2rem; font-weight: 500;
+    }
+
+    .lang-row { display: flex; justify-content: space-between; margin-bottom: .3rem; }
+    .lang-name { font-weight: 500; font-size: .88rem; }
+    .lang-lvl  { font-size: .78rem; color: var(--muted); }
+    .bar-track { height: 3px; background: var(--bg-alt); border-radius: 2px; margin-bottom: .9rem; }
+    .bar-fill  { height: 100%; background: var(--accent); border-radius: 2px; }
+
+    /* ─── EXPERIENCE ──────────────────────────────────── */
+    #experience { background: var(--bg); }
+
+    .timeline { position: relative; padding-left: 2rem; }
+    .timeline::before {
+      content: ''; position: absolute; left: 0; top: 0; bottom: 0;
+      width: 2px; background: var(--bg-alt);
+    }
+    .tl-item { position: relative; padding-bottom: 2.8rem; }
+    .tl-item::before {
+      content: ''; position: absolute;
+      left: -2.45rem; top: .35rem;
+      width: 13px; height: 13px;
+      border-radius: 50%; background: var(--accent);
+      border: 3px solid var(--bg);
+    }
+    .tl-date {
+      font-size: .75rem; color: var(--accent);
+      font-weight: 600; letter-spacing: .05em;
+      text-transform: uppercase; margin-bottom: .4rem;
+    }
+    .tl-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.15rem; color: var(--navy); font-weight: 600;
+      margin-bottom: .2rem;
+    }
+    .tl-company { font-size: .86rem; color: var(--muted); font-style: italic; margin-bottom: .9rem; }
+    .tl-list { list-style: none; }
+    .tl-list li {
+      font-size: .875rem; color: var(--muted);
+      padding: .28rem 0 .28rem 1.2rem;
+      position: relative; line-height: 1.65;
+    }
+    .tl-list li::before {
+      content: '→'; position: absolute; left: 0;
+      color: var(--accent); font-size: .8rem;
+    }
+
+    /* ─── PROJECTS ────────────────────────────────────── */
+    #projects { background: var(--navy); }
+    #projects .s-title { color: #fff; }
+    #projects .s-tag  { color: var(--accent-lt); }
+    #projects .s-rule { background: var(--accent); }
+
+    .proj-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 1.25rem;
+    }
+    .proj-card {
+      background: rgba(255,255,255,.05);
+      border: 1px solid rgba(255,255,255,.1);
+      border-radius: 6px; overflow: hidden;
+      cursor: pointer; transition: all .3s;
+    }
+    .proj-card:hover {
+      transform: translateY(-6px);
+      border-color: var(--accent);
+      box-shadow: 0 20px 40px rgba(0,0,0,.35);
+    }
+    .proj-img-wrap { position: relative; height: 210px; overflow: hidden; }
+    .proj-img {
+      width: 100%; height: 100%;
+      object-fit: cover; display: block;
+      transition: transform .5s;
+    }
+    .proj-card:hover .proj-img { transform: scale(1.05); }
+    .proj-placeholder {
+      width: 100%; height: 100%;
+      background: linear-gradient(135deg, rgba(196,119,59,.25), rgba(27,43,58,.9));
+      display: flex; align-items: center; justify-content: center;
+      font-size: 3.5rem;
+    }
+    .proj-info { padding: 1.4rem; }
+    .proj-tag {
+      font-size: .68rem; font-weight: 600;
+      letter-spacing: .12em; text-transform: uppercase;
+      color: var(--accent-lt); margin-bottom: .4rem;
+    }
+    .proj-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.05rem; color: #fff; margin-bottom: .4rem;
+    }
+    .proj-desc { font-size: .82rem; color: rgba(255,255,255,.5); line-height: 1.65; }
+
+    /* ─── EDUCATION ───────────────────────────────────── */
+    #education { background: var(--bg-alt); }
+
+    .edu-list { display: flex; flex-direction: column; gap: 1.1rem; }
+    .edu-card {
+      background: var(--white); padding: 1.8rem 2rem;
+      border-radius: 6px;
+      display: flex; gap: 2rem; align-items: flex-start;
+      box-shadow: 0 2px 16px rgba(0,0,0,.05);
+      transition: transform .3s, box-shadow .3s;
+    }
+    .edu-card:hover { transform: translateX(4px); box-shadow: 0 4px 24px rgba(0,0,0,.09); }
+    .edu-yr {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.4rem; color: var(--accent);
+      font-weight: 700; min-width: 70px; line-height: 1.2;
+      padding-top: .1rem;
+    }
+    .edu-body h3 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.05rem; color: var(--navy); margin-bottom: .25rem;
+    }
+    .edu-school { font-size: .86rem; color: var(--muted); font-style: italic; margin-bottom: .4rem; }
+    .edu-desc   { font-size: .85rem; color: var(--muted); }
+
+    /* ─── CONTACT ─────────────────────────────────────── */
+    #contact { background: var(--bg); }
+
+    .contact-wrap {
+      display: grid; grid-template-columns: 1fr 1.1fr;
+      gap: 5rem; align-items: start;
+    }
+    .contact-lead h3 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.5rem; color: var(--navy); margin-bottom: .9rem;
+    }
+    .contact-lead p { color: var(--muted); line-height: 1.85; margin-bottom: 2rem; }
+
+    .c-detail { display: flex; align-items: center; gap: 1rem; margin-bottom: 1.2rem; }
+    .c-icon {
+      width: 44px; height: 44px;
+      background: var(--navy); color: var(--accent-lt);
+      border-radius: 4px; flex-shrink: 0;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1rem;
+    }
+    .c-label {
+      display: block; font-size: .7rem;
+      color: var(--muted); text-transform: uppercase;
+      letter-spacing: .08em; margin-bottom: .15rem;
+    }
+    .c-value { font-size: .92rem; color: var(--text); font-weight: 500; }
+
+    .contact-form { display: flex; flex-direction: column; gap: .9rem; }
+    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: .9rem; }
+    .f-group { display: flex; flex-direction: column; gap: .35rem; }
+    .f-group label {
+      font-size: .72rem; font-weight: 600;
+      color: var(--muted); text-transform: uppercase; letter-spacing: .05em;
+    }
+    .f-group input, .f-group textarea {
+      padding: .82rem 1rem;
+      border: 1.5px solid #DDD; border-radius: 4px;
+      font-family: 'Inter', sans-serif; font-size: .88rem;
+      background: var(--white); color: var(--text);
+      outline: none; transition: border-color .25s;
+    }
+    .f-group input:focus, .f-group textarea:focus { border-color: var(--accent); }
+    .f-group textarea { min-height: 130px; resize: vertical; }
+
+    /* ─── FOOTER ──────────────────────────────────────── */
+    footer {
+      background: var(--navy); color: rgba(255,255,255,.4);
+      text-align: center; padding: 2rem;
+      font-size: .82rem;
+    }
+    footer span { color: var(--accent-lt); }
+
+    /* ─── LIGHTBOX ────────────────────────────────────── */
+    .lb {
+      display: none; position: fixed; inset: 0;
+      background: rgba(0,0,0,.93); z-index: 9999;
+      align-items: center; justify-content: center;
+    }
+    .lb.open { display: flex; }
+    .lb img { max-width: 90vw; max-height: 90vh; object-fit: contain; border-radius: 4px; }
+    .lb-close {
+      position: absolute; top: 1.5rem; right: 2rem;
+      color: #fff; font-size: 2rem; cursor: pointer;
+      background: none; border: none; line-height: 1;
+    }
+
+    /* ─── REVEAL ANIMATION ────────────────────────────── */
+    .reveal {
+      opacity: 0; transform: translateY(22px);
+      transition: opacity .6s ease, transform .6s ease;
+    }
+    .reveal.visible { opacity: 1; transform: translateY(0); }
+
+    /* ─── RESPONSIVE ──────────────────────────────────── */
+    @media (max-width: 900px) {
+      .about-wrap    { grid-template-columns: 1fr; gap: 2.5rem; }
+      .contact-wrap  { grid-template-columns: 1fr; gap: 2.5rem; }
+      .hero-photo-bg { display: none; }
+      .about-photo-wrap { display: none; }
+      .stat-grid { grid-template-columns: 1fr 1fr; }
+    }
+    @media (max-width: 640px) {
+      section { padding: 4rem 5%; }
+      .nav-links { display: none; }
+      .form-row  { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ─── NAVIGATION ───────────────────────────────────── -->
+<nav id="nav">
+  <a href="#hero" class="nav-logo">Olive Tetchi</a>
+  <ul class="nav-links">
+    <li><a href="#about">À propos</a></li>
+    <li><a href="#skills">Compétences</a></li>
+    <li><a href="#experience">Expériences</a></li>
+    <li><a href="#projects">Projets</a></li>
+    <li><a href="#education">Formation</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+</nav>
+
+<!-- ─── HERO ─────────────────────────────────────────── -->
+<section id="hero">
+  <div class="hero-photo-bg"></div>
+  <div class="hero-content">
+    <div class="hero-badge">Ingénieure Génie Civil · Maîtrise d'Œuvre</div>
+    <h1>Olive<br><em>TETCHI</em></h1>
+    <p class="hero-sub">
+      De la conception à la réalisation — j'interviens sur des projets de rénovation,
+      réhabilitation et construction neuve avec rigueur et engagement.
+    </p>
+    <div class="hero-btns">
+      <a href="#projects" class="btn-solid">Voir mes projets</a>
+      <a href="#contact"  class="btn-ghost">Me contacter</a>
+    </div>
+  </div>
+  <div class="hero-scroll">
+    <span>Défiler</span>
+    <div class="scroll-bar"></div>
+  </div>
+</section>
+
+<!-- ─── ABOUT ─────────────────────────────────────────── -->
+<section id="about">
+  <div class="s-tag">À propos de moi</div>
+  <h2 class="s-title">Ingénieure passionnée<br>par le bâti</h2>
+  <div class="s-rule"></div>
+
+  <div class="about-wrap">
+    <!-- Photo -->
+    <div class="about-photo-wrap">
+      <img class="about-photo" src="Photo%20de%20profil.avif" alt="Olive TETCHI"
+           onerror="this.style.display='none'; this.nextElementSibling.style.display='flex'">
+      <div class="about-photo-placeholder" style="display:none">👷‍♀️</div>
+      <div class="about-photo-accent"></div>
+    </div>
+
+    <!-- Text -->
+    <div class="about-text">
+      <p>
+        Étudiante en <strong>Master Génie Civil – Construction Durable</strong> à l'Université de Reims
+        Champagne Ardenne, je cumule une formation internationale (Bachelor en Chine) avec une
+        expérience concrète en alternance en maîtrise d'œuvre.
+      </p>
+      <p>
+        Rigoureuse et polyvalente, j'interviens sur l'ensemble des phases d'un projet : de la
+        conception (APS/APD/PRO) à la réception des travaux, en passant par la rédaction des pièces
+        écrites (CCTP, DCE) et le suivi de chantier.
+      </p>
+
+      <div class="info-list">
+        <div class="info-row">
+          <div class="info-icon">📍</div>
+          <span>Reims, France (51100)</span>
+        </div>
+        <div class="info-row">
+          <div class="info-icon">✉</div>
+          <span>tetchiolive@gmail.com</span>
+        </div>
+        <div class="info-row">
+          <div class="info-icon">📞</div>
+          <span>07 53 67 19 65</span>
+        </div>
+        <div class="info-row">
+          <div class="info-icon">🚗</div>
+          <span>Permis B — Mobilité France métropolitaine</span>
+        </div>
+      </div>
+
+      <div class="stat-grid reveal">
+        <div class="stat-box">
+          <div class="stat-num">2+</div>
+          <div class="stat-lbl">Ans d'alternance en maîtrise d'œuvre</div>
+        </div>
+        <div class="stat-box">
+          <div class="stat-num">4</div>
+          <div class="stat-lbl">Expériences professionnelles</div>
+        </div>
+        <div class="stat-box">
+          <div class="stat-num">3</div>
+          <div class="stat-lbl">Langues maîtrisées</div>
+        </div>
+        <div class="stat-box">
+          <div class="stat-num">M2</div>
+          <div class="stat-lbl">Génie Civil – Construction Durable</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ─── SKILLS ─────────────────────────────────────────── -->
+<section id="skills">
+  <div class="s-tag">Compétences</div>
+  <h2 class="s-title">Expertise &amp; Outils</h2>
+  <div class="s-rule"></div>
+
+  <div class="skills-grid">
+    <div class="skill-card reveal">
+      <h3>Maîtrise d'Œuvre</h3>
+      <span class="tag">APS / APD / PRO</span>
+      <span class="tag">CCTP</span>
+      <span class="tag">DCE</span>
+      <span class="tag">Analyse des offres (ACT)</span>
+      <span class="tag">Métrés TCE</span>
+      <span class="tag">Estimations financières</span>
+      <span class="tag">Déclaration préalable</span>
+    </div>
+    <div class="skill-card reveal">
+      <h3>Suivi de Travaux</h3>
+      <span class="tag">Réunions de chantier</span>
+      <span class="tag">Comptes rendus</span>
+      <span class="tag">Coordination des intervenants</span>
+      <span class="tag">Visas</span>
+      <span class="tag">OPR / AOR</span>
+      <span class="tag">Levées de réserves</span>
+    </div>
+    <div class="skill-card reveal">
+      <h3>Logiciels</h3>
+      <span class="tag">AutoCAD</span>
+      <span class="tag">ArchiCAD</span>
+      <span class="tag">MS Project</span>
+      <span class="tag">Navisworks</span>
+      <span class="tag">Logikut</span>
+      <span class="tag">Spectrum</span>
+      <span class="tag">Excel</span>
+      <span class="tag">Word</span>
+    </div>
+    <div class="skill-card reveal">
+      <h3>Langues</h3>
+      <div class="lang-row"><span class="lang-name">Français</span><span class="lang-lvl">Langue maternelle</span></div>
+      <div class="bar-track"><div class="bar-fill" style="width:100%"></div></div>
+      <div class="lang-row"><span class="lang-name">Anglais</span><span class="lang-lvl">B1/B2 – Courant</span></div>
+      <div class="bar-track"><div class="bar-fill" style="width:72%"></div></div>
+      <div class="lang-row"><span class="lang-name">Chinois</span><span class="lang-lvl">A2 – Quotidien</span></div>
+      <div class="bar-track" style="margin-bottom:0"><div class="bar-fill" style="width:28%"></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ─── EXPERIENCE ─────────────────────────────────────── -->
+<section id="experience">
+  <div class="s-tag">Parcours professionnel</div>
+  <h2 class="s-title">Expériences</h2>
+  <div class="s-rule"></div>
+
+  <div class="timeline">
+
+    <div class="tl-item reveal">
+      <div class="tl-date">Juillet 2024 – Septembre 2026</div>
+      <div class="tl-title">Chargée d'études — Maîtrise d'Œuvre</div>
+      <div class="tl-company">SEREMA Ingénierie · Reims, France · Alternance (2 ans+)</div>
+      <ul class="tl-list">
+        <li>Élaboration des pièces écrites pour les lots de second œuvre (CCTP, notices descriptives) et des dossiers d'appel d'offres (DCE)</li>
+        <li>Réalisation des métrés et estimations financières en phase ESQ à PRO</li>
+        <li>Assistance à la passation des contrats de travaux (ACT) : analyse des offres des entreprises</li>
+        <li>Élaboration des dossiers de déclaration préalable pour projets de rénovation énergétique</li>
+        <li>Suivi d'exécution des travaux : réunions de chantier, rédaction de comptes rendus</li>
+        <li>Coordination des intervenants, analyse et validation des documents d'exécution (visas)</li>
+        <li>Participation aux opérations de réception et suivi des levées de réserves</li>
+      </ul>
+    </div>
+
+    <div class="tl-item reveal">
+      <div class="tl-date">Avril 2024 – Juin 2024</div>
+      <div class="tl-title">Assistance Chef de Projets</div>
+      <div class="tl-company">SEREMA Ingénierie · Reims, France · Stage (2 mois)</div>
+      <ul class="tl-list">
+        <li>Réalisation de métrés, états d'acomptes des situations de travaux</li>
+        <li>Assistance à la rédaction des pièces écrites pour projets de rénovation énergétique (CCTP, lettres de consultation)</li>
+        <li>Assistance au suivi de chantier : participation aux réunions, rédaction de comptes rendus</li>
+      </ul>
+    </div>
+
+    <div class="tl-item reveal">
+      <div class="tl-date">Février 2023 – Mai 2023</div>
+      <div class="tl-title">Assistante Architecte d'Intérieur</div>
+      <div class="tl-company">VANGOGH Space Design · Tianjin, Chine · Stage (3 mois)</div>
+      <ul class="tl-list">
+        <li>États des lieux et réalisation des relevés de site</li>
+        <li>Réalisations des plans d'aménagements</li>
+        <li>Création de contenus vidéos</li>
+      </ul>
+    </div>
+
+    <div class="tl-item reveal">
+      <div class="tl-date">Décembre 2018 – Février 2019</div>
+      <div class="tl-title">Suivi de Travaux</div>
+      <div class="tl-company">ABRI 2000 · Abidjan, Côte d'Ivoire · Stage (2 mois)</div>
+      <ul class="tl-list">
+        <li>Suivi des travaux sur chantier</li>
+        <li>Contrôle de la conformité des ouvrages exécutés</li>
+      </ul>
+    </div>
+
+  </div>
+</section>
+
+<!-- ─── PROJECTS ───────────────────────────────────────── -->
+<section id="projects">
+  <div class="s-tag">Réalisations</div>
+  <h2 class="s-title">Projets</h2>
+  <div class="s-rule"></div>
+
+  <div class="proj-grid">
+
+    <!-- Floor Plan -->
+    <div class="proj-card reveal" onclick="openLb('FLOOR%20PLAN/yare%20projet%202%20rdc%20plan%20coupe.jpg')">
+      <div class="proj-img-wrap">
+        <img class="proj-img"
+             src="FLOOR%20PLAN/yare%20projet%202%20rdc%20plan%20coupe.jpg"
+             alt="Floor Plan"
+             onerror="this.parentElement.innerHTML='<div class=\'proj-placeholder\'>🏗️</div>'">
+      </div>
+      <div class="proj-info">
+        <div class="proj-tag">Plans d'Aménagement · Architecture</div>
+        <div class="proj-title">Floor Plan — Plans d'Étage</div>
+        <p class="proj-desc">Réalisation de plans de coupe et de RDC pour un projet résidentiel, avec perspectives intérieures.</p>
+      </div>
+    </div>
+
+    <!-- Maison Duplex -->
+    <div class="proj-card reveal" onclick="openLb('FLOOR%20PLAN/Screenshot%202026-04-09%20025348.png')">
+      <div class="proj-img-wrap">
+        <img class="proj-img"
+             src="FLOOR%20PLAN/Screenshot%202026-04-09%20025348.png"
+             alt="Maison Duplex"
+             onerror="this.parentElement.innerHTML='<div class=\'proj-placeholder\'>🏠</div>'">
+      </div>
+      <div class="proj-info">
+        <div class="proj-tag">Logement · Résidentiel</div>
+        <div class="proj-title">Maison Duplex</div>
+        <p class="proj-desc">Conception et visualisation architecturale d'une maison duplex — rendu 3D des espaces intérieurs et extérieurs.</p>
+      </div>
+    </div>
+
+    <!-- Maison Triplex -->
+    <div class="proj-card reveal" onclick="openLb('MAISON%20TRIPLEX/yare%20projet%202%20Image%20%23%202.jpg')">
+      <div class="proj-img-wrap">
+        <img class="proj-img"
+             src="MAISON%20TRIPLEX/yare%20projet%202%20Image%20%23%202.jpg"
+             alt="Maison Triplex"
+             onerror="this.parentElement.innerHTML='<div class=\'proj-placeholder\'>🏘️</div>'">
+      </div>
+      <div class="proj-info">
+        <div class="proj-tag">Logement · Résidentiel</div>
+        <div class="proj-title">Maison Triplex</div>
+        <p class="proj-desc">Projet de conception d'une maison triplex avec rendu 3D des volumes, espaces de vie et toiture.</p>
+      </div>
+    </div>
+
+    <!-- Projet Factory -->
+    <div class="proj-card reveal" onclick="openLb('PROJET%20FACTORY/maufaturing%20room%202%20-%20PS.png')">
+      <div class="proj-img-wrap">
+        <img class="proj-img"
+             src="PROJET%20FACTORY/maufaturing%20room%202%20-%20PS.png"
+             alt="Projet Factory"
+             onerror="this.parentElement.innerHTML='<div class=\'proj-placeholder\'>🏭</div>'">
+      </div>
+      <div class="proj-info">
+        <div class="proj-tag">Industriel · Bâtiment</div>
+        <div class="proj-title">Projet Factory — Bâtiment Industriel</div>
+        <p class="proj-desc">Conception d'un bâtiment industriel avec salle de fabrication — rendu 3D intérieur et étude spatiale complète.</p>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ─── EDUCATION ──────────────────────────────────────── -->
+<section id="education">
+  <div class="s-tag">Formation académique</div>
+  <h2 class="s-title">Diplômes &amp; Certifications</h2>
+  <div class="s-rule"></div>
+
+  <div class="edu-list">
+
+    <div class="edu-card reveal">
+      <div class="edu-yr">2026</div>
+      <div class="edu-body">
+        <h3>Certification — Sécurité Incendie dans les ERP</h3>
+        <div class="edu-school">Udemy · Formation en ligne</div>
+        <p class="edu-desc">Règles de conception applicables aux établissements recevant du public (ERP).</p>
+      </div>
+    </div>
+
+    <div class="edu-card reveal">
+      <div class="edu-yr">2024<br>— 2026</div>
+      <div class="edu-body">
+        <h3>Master 1 &amp; Master 2 — Génie Civil Construction Durable</h3>
+        <div class="edu-school">Université de Reims Champagne Ardenne · Reims, France</div>
+        <p class="edu-desc">Spécialisation en maîtrise d'œuvre, construction durable, économie de la construction et gestion de projet.</p>
+      </div>
+    </div>
+
+    <div class="edu-card reveal">
+      <div class="edu-yr">2019<br>— 2023</div>
+      <div class="edu-body">
+        <h3>Bachelor — Génie Civil</h3>
+        <div class="edu-school">Hebei University of Technology · Tianjin, Chine</div>
+        <p class="edu-desc">Formation internationale en génie civil avec pratique en architecture d'intérieur et conception architecturale.</p>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ─── CONTACT ────────────────────────────────────────── -->
+<section id="contact">
+  <div class="s-tag">Me contacter</div>
+  <h2 class="s-title">Restons en contact</h2>
+  <div class="s-rule"></div>
+
+  <div class="contact-wrap">
+    <div class="contact-lead reveal">
+      <h3>Je suis disponible pour toute opportunité ou collaboration.</h3>
+      <p>
+        N'hésitez pas à me contacter pour discuter de vos projets, d'une opportunité professionnelle,
+        ou simplement pour échanger sur le génie civil et la construction durable.
+      </p>
+
+      <div class="c-detail">
+        <div class="c-icon">✉</div>
+        <div>
+          <span class="c-label">Email</span>
+          <span class="c-value">tetchiolive@gmail.com</span>
+        </div>
+      </div>
+      <div class="c-detail">
+        <div class="c-icon">📞</div>
+        <div>
+          <span class="c-label">Téléphone</span>
+          <span class="c-value">07 53 67 19 65</span>
+        </div>
+      </div>
+      <div class="c-detail">
+        <div class="c-icon">📍</div>
+        <div>
+          <span class="c-label">Localisation</span>
+          <span class="c-value">Reims, France — 51100</span>
+        </div>
+      </div>
+    </div>
+
+    <form class="contact-form reveal" onsubmit="sendMsg(event)">
+      <div class="form-row">
+        <div class="f-group">
+          <label>Nom</label>
+          <input type="text" placeholder="Votre nom" required />
+        </div>
+        <div class="f-group">
+          <label>Email</label>
+          <input type="email" placeholder="votre@email.com" required />
+        </div>
+      </div>
+      <div class="f-group">
+        <label>Sujet</label>
+        <input type="text" placeholder="Objet de votre message" />
+      </div>
+      <div class="f-group">
+        <label>Message</label>
+        <textarea placeholder="Votre message..."></textarea>
+      </div>
+      <button type="submit" class="btn-solid" style="align-self:flex-start">Envoyer le message</button>
+    </form>
+  </div>
+</section>
+
+<!-- ─── FOOTER ─────────────────────────────────────────── -->
+<footer>
+  <p>&copy; 2026 <span>Olive TETCHI</span> · Ingénieure Génie Civil · Reims, France</p>
+</footer>
+
+<!-- ─── LIGHTBOX ───────────────────────────────────────── -->
+<div class="lb" id="lb" onclick="closeLb()">
+  <button class="lb-close" onclick="closeLb()">✕</button>
+  <img id="lb-img" src="" alt="" onclick="event.stopPropagation()" />
+</div>
+
+<script>
+  /* Nav scroll */
+  window.addEventListener('scroll', () => {
+    document.getElementById('nav').classList.toggle('scrolled', scrollY > 70);
+  });
+
+  /* Lightbox */
+  function openLb(src) {
+    document.getElementById('lb-img').src = src;
+    document.getElementById('lb').classList.add('open');
+    document.body.style.overflow = 'hidden';
+  }
+  function closeLb() {
+    document.getElementById('lb').classList.remove('open');
+    document.body.style.overflow = '';
+  }
+  document.addEventListener('keydown', e => { if (e.key === 'Escape') closeLb(); });
+
+  /* Scroll reveal */
+  const obs = new IntersectionObserver(entries => {
+    entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+  }, { threshold: 0.12 });
+  document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
+
+  /* Contact form */
+  function sendMsg(e) {
+    e.preventDefault();
+    alert('Merci pour votre message ! Je vous répondrai très prochainement.');
+    e.target.reset();
+  }
+</script>
+
+</body>
+</html>
