@@ -1,0 +1,445 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <title>Olive TETCHI — Portfolio PDF</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --navy:      #1B2B3A;
+      --accent:    #C4773B;
+      --accent-lt: #E8A76D;
+      --bg:        #F9F7F4;
+      --bg-alt:    #EDE8DF;
+      --text:      #2A2A2A;
+      --muted:     #6B7280;
+      --white:     #FFFFFF;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: #e8e8e8;
+      color: var(--text);
+      font-size: 11px;
+      line-height: 1.5;
+    }
+
+    /* ── PAGE SETUP ── */
+    .page {
+      width: 297mm;
+      min-height: 210mm;
+      background: var(--white);
+      margin: 10mm auto;
+      display: grid;
+      grid-template-columns: 72mm 1fr;
+      box-shadow: 0 4px 24px rgba(0,0,0,.15);
+      overflow: hidden;
+    }
+
+    /* ── SIDEBAR ── */
+    .sidebar {
+      background: var(--navy);
+      color: white;
+      padding: 10mm 7mm;
+      display: flex;
+      flex-direction: column;
+      gap: 6mm;
+    }
+
+    .photo-wrap {
+      width: 100%;
+      aspect-ratio: 1;
+      border-radius: 4px;
+      overflow: hidden;
+      border: 2px solid var(--accent);
+    }
+    .photo-wrap img {
+      width: 100%; height: 100%;
+      object-fit: cover; object-position: top;
+    }
+    .photo-placeholder {
+      width: 100%; height: 100%;
+      background: linear-gradient(135deg, #2e4a62, var(--navy));
+      display: flex; align-items: center; justify-content: center;
+      font-size: 3rem;
+    }
+
+    .sidebar-name {
+      border-top: 1px solid rgba(255,255,255,.15);
+      padding-top: 5mm;
+    }
+    .sidebar-name h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: 16px; font-weight: 700;
+      line-height: 1.15; color: white;
+    }
+    .sidebar-name h1 em {
+      color: var(--accent-lt); font-style: italic;
+    }
+    .sidebar-name .title {
+      font-size: 9px; font-weight: 500;
+      color: var(--accent-lt);
+      letter-spacing: .08em; text-transform: uppercase;
+      margin-top: 2mm;
+    }
+
+    .s-block { display: flex; flex-direction: column; gap: 2mm; }
+
+    .s-heading {
+      font-size: 8px; font-weight: 600;
+      letter-spacing: .12em; text-transform: uppercase;
+      color: var(--accent-lt);
+      border-bottom: 1px solid rgba(255,255,255,.1);
+      padding-bottom: 1.5mm; margin-bottom: 1mm;
+    }
+
+    .contact-row {
+      display: flex; align-items: flex-start; gap: 2mm;
+      font-size: 9px; color: rgba(255,255,255,.8);
+      line-height: 1.4;
+    }
+    .contact-row .ic {
+      color: var(--accent-lt); width: 8px; flex-shrink: 0; margin-top: .5px;
+    }
+
+    .skill-tag {
+      display: inline-block;
+      background: rgba(255,255,255,.08);
+      color: rgba(255,255,255,.85);
+      font-size: 8.5px; padding: 1mm 2.5mm;
+      border-radius: 20px; margin: .8mm .5mm;
+    }
+
+    .lang-item { margin-bottom: 2mm; }
+    .lang-top { display: flex; justify-content: space-between; font-size: 9px; margin-bottom: .8mm; }
+    .lang-top .lname { color: white; font-weight: 500; }
+    .lang-top .llvl  { color: rgba(255,255,255,.55); }
+    .lang-bar { height: 2px; background: rgba(255,255,255,.15); border-radius: 2px; }
+    .lang-fill { height: 100%; background: var(--accent); border-radius: 2px; }
+
+    .assoc-item { font-size: 9px; color: rgba(255,255,255,.75); line-height: 1.4; margin-bottom: 1.5mm; }
+    .assoc-item strong { color: white; display: block; }
+
+    /* ── MAIN ── */
+    .main {
+      padding: 8mm 8mm 8mm 7mm;
+      display: flex;
+      flex-direction: column;
+      gap: 5mm;
+    }
+
+    .m-section { display: flex; flex-direction: column; gap: 2.5mm; }
+
+    .m-heading {
+      font-size: 8px; font-weight: 600;
+      letter-spacing: .13em; text-transform: uppercase;
+      color: var(--accent);
+      border-bottom: 1.5px solid var(--bg-alt);
+      padding-bottom: 1.5mm;
+    }
+
+    /* Experience */
+    .exp-item { margin-bottom: 2.5mm; }
+    .exp-header { display: flex; justify-content: space-between; align-items: flex-start; }
+    .exp-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 11px; color: var(--navy); font-weight: 600;
+    }
+    .exp-date {
+      font-size: 8px; color: var(--accent);
+      font-weight: 600; white-space: nowrap; margin-left: 3mm;
+    }
+    .exp-company { font-size: 9px; color: var(--muted); font-style: italic; margin-bottom: 1mm; }
+    .exp-list { list-style: none; }
+    .exp-list li {
+      font-size: 9px; color: var(--muted);
+      padding-left: 8px; position: relative; line-height: 1.5;
+    }
+    .exp-list li::before {
+      content: '›'; position: absolute; left: 0;
+      color: var(--accent); font-size: 11px; line-height: 1.2;
+    }
+
+    /* Projects grid */
+    .proj-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 2.5mm;
+    }
+    .proj-card {
+      border-radius: 3px; overflow: hidden;
+      border: 1px solid var(--bg-alt);
+    }
+    .proj-img {
+      width: 100%; height: 22mm;
+      object-fit: cover; display: block;
+    }
+    .proj-placeholder {
+      width: 100%; height: 22mm;
+      background: linear-gradient(135deg, rgba(196,119,59,.2), rgba(27,43,58,.5));
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.6rem;
+    }
+    .proj-info { padding: 1.5mm 2mm; background: var(--bg); }
+    .proj-tag { font-size: 7px; color: var(--accent); font-weight: 600; text-transform: uppercase; letter-spacing: .06em; }
+    .proj-title { font-size: 8.5px; color: var(--navy); font-weight: 600; margin-top: .5mm; }
+
+    /* Education */
+    .edu-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2.5mm; }
+    .edu-card {
+      background: var(--bg); border-radius: 3px;
+      padding: 2.5mm; border-left: 2px solid var(--accent);
+    }
+    .edu-yr { font-size: 9px; color: var(--accent); font-weight: 700; margin-bottom: 1mm; }
+    .edu-title { font-size: 9px; color: var(--navy); font-weight: 600; line-height: 1.4; margin-bottom: .5mm; }
+    .edu-school { font-size: 8px; color: var(--muted); font-style: italic; }
+
+    /* ── PRINT ── */
+    @page {
+      size: A4 landscape;
+      margin: 0;
+    }
+    @media print {
+      body { background: white; }
+      .page { margin: 0; box-shadow: none; width: 100%; min-height: 100vh; }
+      .print-btn { display: none; }
+    }
+
+    /* ── PRINT BUTTON (screen only) ── */
+    .print-btn {
+      position: fixed; bottom: 2rem; right: 2rem;
+      background: var(--accent); color: white;
+      border: none; border-radius: 4px;
+      padding: .9rem 1.8rem;
+      font-family: 'Inter', sans-serif;
+      font-size: .9rem; font-weight: 600;
+      cursor: pointer; box-shadow: 0 4px 16px rgba(0,0,0,.2);
+      z-index: 999;
+    }
+    .print-btn:hover { background: var(--accent-lt); }
+  </style>
+</head>
+<body>
+
+<div class="page">
+
+  <!-- ── SIDEBAR ── -->
+  <div class="sidebar">
+
+    <div class="photo-wrap">
+      <img src="Photo de profil.avif" alt="Olive TETCHI"
+           onerror="this.style.display='none'; this.nextElementSibling.style.display='flex'">
+      <div class="photo-placeholder" style="display:none">👷‍♀️</div>
+    </div>
+
+    <div class="sidebar-name">
+      <h1>Olive<br><em>TETCHI</em></h1>
+      <div class="title">Ingénieure Génie Civil</div>
+    </div>
+
+    <!-- Contact -->
+    <div class="s-block">
+      <div class="s-heading">Contact</div>
+      <div class="contact-row"><span class="ic">✉</span><span>tetchiolive@gmail.com</span></div>
+      <div class="contact-row"><span class="ic">📞</span><span>07 53 67 19 65</span></div>
+      <div class="contact-row"><span class="ic">📍</span><span>Reims, France (51100)</span></div>
+      <div class="contact-row"><span class="ic">🚗</span><span>Permis B</span></div>
+    </div>
+
+    <!-- Compétences -->
+    <div class="s-block">
+      <div class="s-heading">Logiciels</div>
+      <div>
+        <span class="skill-tag">AutoCAD</span>
+        <span class="skill-tag">ArchiCAD</span>
+        <span class="skill-tag">MS Project</span>
+        <span class="skill-tag">Navisworks</span>
+        <span class="skill-tag">Logikut</span>
+        <span class="skill-tag">Spectrum</span>
+        <span class="skill-tag">Excel</span>
+        <span class="skill-tag">Word</span>
+      </div>
+    </div>
+
+    <!-- Langues -->
+    <div class="s-block">
+      <div class="s-heading">Langues</div>
+      <div class="lang-item">
+        <div class="lang-top"><span class="lname">Français</span><span class="llvl">Maternelle</span></div>
+        <div class="lang-bar"><div class="lang-fill" style="width:100%"></div></div>
+      </div>
+      <div class="lang-item">
+        <div class="lang-top"><span class="lname">Anglais</span><span class="llvl">B1/B2</span></div>
+        <div class="lang-bar"><div class="lang-fill" style="width:72%"></div></div>
+      </div>
+      <div class="lang-item">
+        <div class="lang-top"><span class="lname">Chinois</span><span class="llvl">A2</span></div>
+        <div class="lang-bar"><div class="lang-fill" style="width:28%"></div></div>
+      </div>
+    </div>
+
+    <!-- Vie associative -->
+    <div class="s-block">
+      <div class="s-heading">Vie Associative</div>
+      <div class="assoc-item">
+        <strong>Jeunes Femmes d'Impact</strong>
+        Membre active
+      </div>
+      <div class="assoc-item">
+        <strong>Assoc. Étudiants Ivoiriens en Chine</strong>
+        Trésorière (2020–2022)
+      </div>
+    </div>
+
+  </div><!-- /sidebar -->
+
+  <!-- ── MAIN ── -->
+  <div class="main">
+
+    <!-- Expériences -->
+    <div class="m-section">
+      <div class="m-heading">Expériences Professionnelles</div>
+
+      <div class="exp-item">
+        <div class="exp-header">
+          <div class="exp-title">Chargée d'études — Maîtrise d'Œuvre (Alternance)</div>
+          <div class="exp-date">Juil. 2024 – Sept. 2026</div>
+        </div>
+        <div class="exp-company">SEREMA Ingénierie · Reims, France</div>
+        <ul class="exp-list">
+          <li>Élaboration des pièces écrites (CCTP, notices descriptives, DCE) pour lots de second œuvre</li>
+          <li>Métrés et estimations financières en phase ESQ à PRO — Analyse des offres entreprises (ACT)</li>
+          <li>Suivi d'exécution : réunions chantier, comptes rendus, coordination des intervenants, visas</li>
+          <li>Opérations de réception et suivi des levées de réserves (OPR/AOR)</li>
+        </ul>
+      </div>
+
+      <div class="exp-item">
+        <div class="exp-header">
+          <div class="exp-title">Assistance Chef de Projets (Stage)</div>
+          <div class="exp-date">Avr. – Juin 2024</div>
+        </div>
+        <div class="exp-company">SEREMA Ingénierie · Reims, France</div>
+        <ul class="exp-list">
+          <li>Métrés, états d'acomptes, rédaction de CCTP pour projets de rénovation énergétique</li>
+          <li>Participation aux réunions de chantier et rédaction des comptes rendus</li>
+        </ul>
+      </div>
+
+      <div class="exp-item">
+        <div class="exp-header">
+          <div class="exp-title">Assistante Architecte d'Intérieur (Stage)</div>
+          <div class="exp-date">Fév. – Mai 2023</div>
+        </div>
+        <div class="exp-company">VANGOGH Space Design · Tianjin, Chine</div>
+        <ul class="exp-list">
+          <li>États des lieux, relevés de site, plans d'aménagements, création de contenus vidéos</li>
+        </ul>
+      </div>
+
+      <div class="exp-item">
+        <div class="exp-header">
+          <div class="exp-title">Suivi de Travaux (Stage)</div>
+          <div class="exp-date">Déc. 2018 – Fév. 2019</div>
+        </div>
+        <div class="exp-company">ABRI 2000 · Abidjan, Côte d'Ivoire</div>
+        <ul class="exp-list">
+          <li>Suivi des travaux et contrôle de la conformité des ouvrages exécutés</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- Projets -->
+    <div class="m-section">
+      <div class="m-heading">Projets Réalisés</div>
+      <div class="proj-grid">
+
+        <div class="proj-card">
+          <img class="proj-img" src="FLOOR%20PLAN/Screenshot%202026-04-09%20025348.png" alt="Floor Plan"
+               onerror="this.parentElement.innerHTML='<div class=\'proj-placeholder\'>🏗️</div>'">
+          <div class="proj-info">
+            <div class="proj-tag">Plans d'Étage</div>
+            <div class="proj-title">Floor Plan</div>
+          </div>
+        </div>
+
+        <div class="proj-card">
+          <img class="proj-img" src="MAION%20DUPLEX/yare%20projet%202%20rdc%20plan%20coupe.jpg" alt="Maison Duplex"
+               onerror="this.parentElement.innerHTML='<div class=\'proj-placeholder\'>🏠</div>'">
+          <div class="proj-info">
+            <div class="proj-tag">Résidentiel</div>
+            <div class="proj-title">Maison Duplex</div>
+          </div>
+        </div>
+
+        <div class="proj-card">
+          <img class="proj-img" src="MAISON%20TRIPLEX/yare%20projet%202%20Image%202.jpg" alt="Maison Triplex"
+               onerror="this.parentElement.innerHTML='<div class=\'proj-placeholder\'>🏘️</div>'">
+          <div class="proj-info">
+            <div class="proj-tag">Résidentiel</div>
+            <div class="proj-title">Maison Triplex</div>
+          </div>
+        </div>
+
+        <div class="proj-card">
+          <img class="proj-img" src="PROJET%20FACTORY/maufaturing%20room%202%20-%20PS.png" alt="Factory"
+               onerror="this.parentElement.innerHTML='<div class=\'proj-placeholder\'>🏭</div>'">
+          <div class="proj-info">
+            <div class="proj-tag">Industriel</div>
+            <div class="proj-title">Projet Factory</div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- Formation -->
+    <div class="m-section">
+      <div class="m-heading">Formation &amp; Certifications</div>
+      <div class="edu-grid">
+        <div class="edu-card">
+          <div class="edu-yr">2026</div>
+          <div class="edu-title">Certification Sécurité Incendie ERP</div>
+          <div class="edu-school">Udemy · En ligne</div>
+        </div>
+        <div class="edu-card">
+          <div class="edu-yr">2024 — 2026</div>
+          <div class="edu-title">Master Génie Civil — Construction Durable (M1 &amp; M2)</div>
+          <div class="edu-school">Université de Reims Champagne Ardenne</div>
+        </div>
+        <div class="edu-card">
+          <div class="edu-yr">2019 — 2023</div>
+          <div class="edu-title">Bachelor Génie Civil</div>
+          <div class="edu-school">Hebei University of Technology · Tianjin, Chine</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Compétences MOE -->
+    <div class="m-section">
+      <div class="m-heading">Compétences Clés</div>
+      <div style="display:flex; flex-wrap:wrap; gap:1.5mm">
+        <span style="background:var(--bg-alt);color:var(--navy);font-size:9px;padding:1.5mm 3mm;border-radius:20px;font-weight:500">APS / APD / PRO</span>
+        <span style="background:var(--bg-alt);color:var(--navy);font-size:9px;padding:1.5mm 3mm;border-radius:20px;font-weight:500">CCTP</span>
+        <span style="background:var(--bg-alt);color:var(--navy);font-size:9px;padding:1.5mm 3mm;border-radius:20px;font-weight:500">DCE</span>
+        <span style="background:var(--bg-alt);color:var(--navy);font-size:9px;padding:1.5mm 3mm;border-radius:20px;font-weight:500">Analyse des offres (ACT)</span>
+        <span style="background:var(--bg-alt);color:var(--navy);font-size:9px;padding:1.5mm 3mm;border-radius:20px;font-weight:500">Métrés TCE</span>
+        <span style="background:var(--bg-alt);color:var(--navy);font-size:9px;padding:1.5mm 3mm;border-radius:20px;font-weight:500">Estimations financières</span>
+        <span style="background:var(--bg-alt);color:var(--navy);font-size:9px;padding:1.5mm 3mm;border-radius:20px;font-weight:500">Réunions de chantier</span>
+        <span style="background:var(--bg-alt);color:var(--navy);font-size:9px;padding:1.5mm 3mm;border-radius:20px;font-weight:500">Coordination des intervenants</span>
+        <span style="background:var(--bg-alt);color:var(--navy);font-size:9px;padding:1.5mm 3mm;border-radius:20px;font-weight:500">Visas</span>
+        <span style="background:var(--bg-alt);color:var(--navy);font-size:9px;padding:1.5mm 3mm;border-radius:20px;font-weight:500">OPR / AOR</span>
+        <span style="background:var(--bg-alt);color:var(--navy);font-size:9px;padding:1.5mm 3mm;border-radius:20px;font-weight:500">Levées de réserves</span>
+        <span style="background:var(--bg-alt);color:var(--navy);font-size:9px;padding:1.5mm 3mm;border-radius:20px;font-weight:500">Rénovation énergétique</span>
+      </div>
+    </div>
+
+  </div><!-- /main -->
+</div><!-- /page -->
+
+<button class="print-btn" onclick="window.print()">Enregistrer en PDF</button>
+
+</body>
+</html>
