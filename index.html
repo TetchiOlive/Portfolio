@@ -672,9 +672,9 @@
 
   .contact-grid {
     display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 5rem;
-    align-items: start;
+    grid-template-columns: 1fr;
+    gap: 2rem;
+    max-width: 600px;
   }
 
   .contact-text { font-size: 1rem; color: rgba(245,240,232,0.6); line-height: 1.9; margin-bottom: 2.5rem; }
@@ -810,7 +810,7 @@
 <!-- HERO -->
 <section class="hero" id="hero">
   <div class="hero-text fade-in">
-    <p class="hero-eyebrow">Ingénieure Génie Civil</p>
+    <p class="hero-eyebrow">Ingénieure Génie Civil · En fin de formation</p>
     <h1 class="hero-name">Olive<br><em>TETCHI</em></h1>
     <p class="hero-tagline">De la conception à la réalisation — j'interviens sur des projets de rénovation, réhabilitation et construction neuve avec rigueur et engagement.</p>
     <div class="hero-actions">
@@ -1165,17 +1165,6 @@
           </div>
         </div>
       </div>
-    </div>
-    <div class="fade-in">
-      <form class="contact-form" onsubmit="sendMsg(event)">
-        <div class="form-row">
-          <input type="text" placeholder="Nom" required />
-          <input type="email" placeholder="Email" required />
-        </div>
-        <input type="text" placeholder="Sujet" />
-        <textarea placeholder="Votre message..."></textarea>
-        <button type="submit" class="btn-form">Envoyer le message</button>
-      </form>
     </div>
   </div>
 </section>
