@@ -475,17 +475,29 @@
   }
 
   .project-header {
-    height: 160px;
+    height: 200px;
     position: relative;
     display: flex;
     flex-direction: column;
     justify-content: flex-end;
     padding: 1.2rem;
+    background-size: cover;
+    background-position: center;
+    overflow: hidden;
   }
 
-  .project-header-1 { background: linear-gradient(135deg, #3D2B1F 0%, #7A4A2E 60%, #B85C38 100%); }
-  .project-header-2 { background: linear-gradient(135deg, #1A2C3D 0%, #2E4A62 60%, #4A7090 100%); }
-  .project-header-3 { background: linear-gradient(135deg, #2D3D2A 0%, #4A6642 60%, #6B8F5E 100%); }
+  .project-header::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to top, rgba(0,0,0,0.75) 0%, rgba(0,0,0,0.1) 60%, transparent 100%);
+  }
+
+  .project-header > * { position: relative; z-index: 1; }
+
+  .project-header-1 { background-image: url('img-laon.png'); }
+  .project-header-2 { background-image: url('img-reims.png'); }
+  .project-header-3 { background-image: url('img-gerbert.jpeg'); }
 
   .project-type-badge {
     position: absolute;
