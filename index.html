@@ -782,7 +782,10 @@
     .hero-eyebrow { justify-content: center; }
     .hero-actions { justify-content: center; }
     .hero-stats { grid-template-columns: repeat(3, 1fr); }
-    .hero-image-wrap { display: none; }
+    .hero-image-wrap { display: flex; justify-content: center; margin-bottom: 1.5rem; order: -1; }
+    .hero-image-frame { width: 200px; height: 250px; }
+    .hero-image-frame::before { display: none; }
+    .hero-badge { font-size: 0.65rem; padding: 0.6rem 1rem; bottom: -10px; left: -10px; }
     .skills-grid { grid-template-columns: 1fr; }
     .projects-grid { grid-template-columns: 1fr; }
     .edu-card { grid-template-columns: 1fr; gap: 0.5rem; }
